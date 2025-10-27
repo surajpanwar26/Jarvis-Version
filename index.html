@@ -608,7 +608,7 @@
         <div class="main-content">
             <div class="card">
                 <h2>What is JARVIS 2.0?</h2>
-                <p>A simple yet completely customizable, scalable and lightweight chatbot powered by Groq AI and Expert Systems. Built with modern technologies, JARVIS 2.0 uses advanced AI to provide fast, accurate responses.</p>
+                <p>A simple yet completely customizable, scalable and lightweight chatbot powered by advanced AI. Built with modern technologies, JARVIS 2.0 uses intelligent algorithms to provide fast, accurate responses.</p>
                 <button class="cta-button" onclick="scrollToDemo()">See Demo</button>
             </div>
 
@@ -684,7 +684,7 @@
         </div>
 
         <div class="footer">
-            <p>Powered by Groq AI with Llama-3.3-70b-versatile | JARVIS 2.0 Expert System</p>
+            <p>Powered by JARVIS 2.0 Expert System | Advanced AI Technology</p>
             <p style="margin-top: 10px;">Built with Node.js | AI Powered Intelligence</p>
         </div>
     </div>
@@ -857,7 +857,7 @@
             try {
                 statusText.textContent = 'Status: Connecting...';
                 statusText.style.color = '#ffaa00';
-                addMessage('System', 'Initializing JARVIS 2.0 AI Expert System with Groq Engine...');
+                addMessage('System', 'Initializing JARVIS 2.0 AI Expert System...');
                 
                 const response = await fetch('http://localhost:8080/start', {
                     method: 'POST'
@@ -866,12 +866,12 @@
                 if (!response) {
                     // Fallback to demo mode
                     showToast('Running in demo mode - C++ backend not found', 'info');
-                    addMessage('JARVIS 2.0', '✨ Demo Mode Active! Using Groq Llama-3.3-70b for responses. Try asking me something!');
+                    addMessage('JARVIS 2.0', '✨ Demo Mode Active! Using AI for responses. Try asking me something!');
                     statusText.textContent = 'Status: Demo Mode (HF AI Active)';
                     statusText.style.color = '#ffaa00';
                 } else if (response.ok) {
                     const data = await response.json();
-                    addMessage('JARVIS 2.0', `🎯 Connected! Using Groq AI Knowledge Base. Ready to answer any question!`);
+                    addMessage('JARVIS 2.0', `🎯 Connected! Using AI Knowledge Base. Ready to answer any question!`);
                     statusText.textContent = 'Status: Connected (Local AI KB) ✓';
                     statusText.style.color = '#00ff00';
                     showToast('🧠 Local AI Knowledge Base connected - No external API required!', 'success');
@@ -966,13 +966,13 @@ For more info, just ask!`;
                     const demoResponses = {
                         'hello': 'Hello! Welcome to JARVIS 2.0. How can I assist you today?',
                         'hi': 'Greetings! I\'m JARVIS 2.0, here to help with any questions you might have.',
-                        'who are you': 'I\'m JARVIS 2.0, an intelligent AI assistant powered by Groq\'s Llama-3.3-70b. I\'m designed to provide accurate, contextual responses to your queries.',
+                        'who are you': 'I\'m JARVIS 2.0, an intelligent AI assistant. I\'m designed to provide accurate, contextual responses to your queries.',
                         'how are you': 'I\'m functioning optimally and ready to assist! Thanks for asking.',
-                        'what can you do': 'I can answer questions using advanced AI, engage in meaningful conversations, and provide information across various domains using Groq\'s powerful language model.',
-                        'help': 'You can ask me about various topics. I\'m powered by Groq\'s Llama-3.3-70b model that helps me provide accurate answers. Try asking me specific questions!',
+                        'what can you do': 'I can answer questions using advanced AI, engage in meaningful conversations, and provide information across various domains.',
+                        'help': 'You can ask me about various topics. I\'m powered by advanced AI that helps me provide accurate answers. Try asking me specific questions!',
                         'thanks': 'You\'re welcome! Feel free to ask if you need anything else.',
                         'thank you': 'Happy to help! Is there anything else you\'d like to know?',
-                        'default': 'That\'s an interesting question! I\'m JARVIS 2.0, powered by Groq\'s cutting-edge AI. Feel free to ask me anything!'
+                        'default': 'That\'s an interesting question! I\'m JARVIS 2.0, powered by advanced AI. Feel free to ask me anything!'
                     };
                     
                     const response = demoResponses[lowerMessage] || demoResponses['default'];
@@ -987,7 +987,7 @@ For more info, just ask!`;
                 // Try fallback to HF API
                 if (isWaitingForResponse) {
                     try {
-                        console.log('Attempting HuggingFace API fallback...');
+                        console.log('Attempting AI service fallback...');
                         const hfResponse = await fetch('http://localhost:8080/ai-research', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
@@ -996,8 +996,8 @@ For more info, just ask!`;
                         
                         if (hfResponse.ok) {
                             const hfData = await hfResponse.json();
-                            addMessage('JARVIS 2.0', hfData.response, false, 'AI Research (Groq Llama-3.3-70b)');
-                            showToast('🧠 Fallback to Hugging Face AI successful', 'success');
+                            addMessage('JARVIS 2.0', hfData.response, false, 'AI Research');
+                            showToast('🧠 Fallback AI service successful', 'success');
                         }
                     } catch (fallbackError) {
                         console.error('Fallback error:', fallbackError);

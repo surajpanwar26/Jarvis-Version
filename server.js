@@ -7,14 +7,12 @@ const axios = require('axios');
 
 const app = express();
 const PORT = 8080;
-const GROQ_API_KEY = process.env.GROQ_API_KEY || '';
-if (!GROQ_API_KEY) {
-    console.warn('⚠️  Warning: GROQ_API_KEY not set. Please configure it in .env file.');
+const API_KEY = process.env.API_KEY || '';
+if (!API_KEY) {
+    console.warn('⚠️  Warning: API_KEY not set. Please configure it in .env file.');
 }
-const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
-
-// Configuration: Using Groq AI API (Lightning Fast)
-const AI_SERVICE = 'groq_api';
+const API_URL = process.env.API_URL || '';
+const API_MODEL = process.env.API_MODEL || 'default-model';
 
 app.use(cors());
 app.use(express.json());
@@ -88,17 +86,16 @@ function generateSmartResponse(userQuery) {
     return aiKnowledgeBase.default;
 }
 
-// AI Response function - uses Groq API
+// AI Response function - uses configured AI service
 async function generateAIResponse(userQuery) {
     try {
-        console.log('\n=== Generating AI Response (Groq API) ===');
+        console.log('\n=== Generating AI Response ===');
         console.log('Query:', userQuery);
-        console.log('Model: llama-3.3-70b-versatile');
         
         const response = await axios.post(
-            GROQ_API_URL,
+            API_URL,
             {
-                model: 'llama-3.3-70b-versatile',
+                model: API_MODEL,
                 messages: [
                     {
                         role: 'system',
@@ -115,7 +112,7 @@ async function generateAIResponse(userQuery) {
             {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${GROQ_API_KEY}`
+                    'Authorization': `Bearer ${API_KEY}`
                 },
                 timeout: 15000
             }

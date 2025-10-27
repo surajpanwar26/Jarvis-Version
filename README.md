@@ -1,11 +1,11 @@
 # JARVIS 2.0 - AI Chatbot
 
-**JARVIS 2.0** is an intelligent AI-powered chatbot built with Node.js and powered by Groq's Llama-3.3-70b-versatile language model. It features a dark-themed, interactive web interface with real-time AI responses.
+**JARVIS 2.0** is an intelligent AI-powered chatbot built with Node.js and powered by advanced AI language models. It features a dark-themed, interactive web interface with real-time AI responses.
 
 ## Features
 
-* 🧠 **Groq AI Integration** - Powered by state-of-the-art Llama-3.3-70b-versatile model
-* ⚡ **Lightning Fast** - Instant responses from Groq's ultra-fast inference API
+* 🧠 **AI Integration** - Powered by advanced language models
+* ⚡ **Lightning Fast** - Instant responses with optimized inference
 * 🎨 **Modern Dark Theme** - Beautiful cyberpunk-inspired UI with animations
 * 💬 **Interactive Chat** - Real-time messaging with typing indicators and timestamps
 * 🔄 **Fallback System** - Local knowledge base backup if API is unavailable
@@ -15,7 +15,7 @@
 
 ### Prerequisites
 - Node.js installed
-- Groq API key (free at https://console.groq.com/)
+- API Key (Configure based on your AI service provider)
 
 ### Installation
 
@@ -29,14 +29,13 @@ npm install
 1. Create a `.env` file in the project root:
 
 ```env
-GROQ_API_KEY=your_groq_api_key_here
+API_KEY=your_api_key_here
+API_URL=your_api_endpoint_url
+API_MODEL=your_model_name
 PORT=8080
 ```
 
-2. Get your Groq API key:
-   - Visit https://console.groq.com/
-   - Create a free account
-   - Generate an API key
+2. Get your API key from your AI service provider and configure it
 
 ### Running
 
@@ -69,7 +68,7 @@ JARVIS-2.0/
 
 - **Frontend**: HTML5, CSS3, JavaScript
 - **Backend**: Node.js, Express.js
-- **AI**: Groq API (Llama-3.3-70b-versatile)
+- **AI**: Advanced AI Language Models
 - **Styling**: Modern CSS with animations
 
 ## Features
@@ -95,8 +94,8 @@ JARVIS-2.0/
 
 ## Known Limitations
 
-- Requires active internet connection for Groq API
-- Rate limited by Groq free tier
+- Requires active internet connection for AI API
+- Rate limited based on API provider's tier
 - No conversation persistence
 
 ## Future Enhancements
