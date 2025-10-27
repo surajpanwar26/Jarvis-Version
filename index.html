@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JARVIS 2.0 - AI Expert System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1729 100%);
+            color: #e0e6ed;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            background-attachment: fixed;
+        }
+
+        /* Animated background particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(0, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+            background: rgba(10, 14, 39, 0.6);
+            border-radius: 20px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            font-size: 3.5em;
+            background: linear-gradient(135deg, #00ffff 0%, #00ccff 50%, #0099ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+            letter-spacing: 3px;
+        }
+
+        .header .tagline {
+            font-size: 1.2em;
+            color: #8b9dc3;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: rgba(15, 23, 41, 0.8);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 255, 255, 0.5);
+            box-shadow: 0 12px 48px rgba(0, 255, 255, 0.2);
+        }
+
+        .card h2 {
+            color: #00ffff;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card h2::before {
+            content: '▸';
+            color: #00ffff;
+            font-size: 1.2em;
+        }
+
+        .card p, .card ul {
+            color: #b8c5d6;
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .card ul li {
+            padding: 10px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .card ul li::before {
+            content: '◆';
+            position: absolute;
+            left: 0;
+            color: #00ccff;
+        }
+
+        .features {
+            grid-column: 1 / -1;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .feature-item {
+            background: rgba(0, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(0, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            background: rgba(0, 255, 255, 0.1);
+            border-color: rgba(0, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .feature-item h3 {
+            color: #00ffff;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .chat-container {
+            background: rgba(5, 10, 20, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        .chat-messages {
+            height: 500px;
+            overflow-y: auto;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0, 255, 255, 0.15);
+            scroll-behavior: smooth;
+        }
+        
+        .chat-messages::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .chat-messages::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+        }
+        
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: rgba(0, 255, 255, 0.3);
+            border-radius: 10px;
+        }
+        
+        .chat-messages::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 255, 255, 0.5);
+        }
+
+        .message {
+            margin: 15px 0;
+            animation: fadeIn 0.4s ease;
+            padding: 12px 16px;
+            border-radius: 12px;
+            max-width: 85%;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .message-sender {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+
+        .bot-message {
+            background: rgba(0, 204, 255, 0.1);
+            border-left: 3px solid #00ccff;
+        }
+        
+        .bot-message .message-sender {
+            color: #00ccff;
+        }
+        
+        .bot-message .message-text {
+            color: #e0e6ed;
+            word-wrap: break-word;
+        }
+
+        .user-message {
+            background: rgba(0, 255, 136, 0.1);
+            border-left: 3px solid #00ff88;
+            margin-left: auto;
+            max-width: 75%;
+        }
+        
+        .user-message .message-sender {
+            color: #00ff88;
+        }
+        
+        .user-message .message-text {
+            color: #e0e6ed;
+            word-wrap: break-word;
+        }
+
+        .message-text {
+            line-height: 1.6;
+        }
+        
+        .message-time {
+            font-size: 0.75em;
+            color: #6b7a94;
+            margin-top: 5px;
+            display: block;
+        }
+        
+        .message-source {
+            font-size: 0.7em;
+            color: #00ffff;
+            margin-top: 3px;
+            display: inline-block;
+            background: rgba(0, 255, 255, 0.1);
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 8px;
+        }
+        
+        .ai-research {
+            background: rgba(0, 255, 255, 0.08) !important;
+        }
+        
+        .ai-research .message-source {
+            background: rgba(0, 255, 255, 0.15);
+            color: #00ffff;
+            font-weight: 600;
+        }
+        
+        .message-source {
+            font-size: 0.7em;
+            color: #00ffff;
+            margin-top: 3px;
+            display: inline-block;
+            background: rgba(0, 255, 255, 0.1);
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 8px;
+        }
+        
+        .ai-research {
+            background: rgba(0, 255, 255, 0.08);
+        }
+        
+        .ai-research .message-source {
+            background: rgba(0, 255, 255, 0.15);
+            color: #00ffff;
+            font-weight: 600;
+        }
+        
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 12px 16px;
+            background: rgba(0, 204, 255, 0.1);
+            border-left: 3px solid #00ccff;
+            border-radius: 12px;
+            width: fit-content;
+        }
+        
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #00ccff;
+            animation: blink 1.4s infinite;
+        }
+        
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        .chat-input-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 15px 20px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            border-radius: 25px;
+            color: #e0e6ed;
+            font-size: 1em;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input:focus {
+            border-color: rgba(0, 255, 255, 0.6);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+        }
+
+        .chat-input:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .send-button {
+            padding: 15px 35px;
+            background: linear-gradient(135deg, #00ffff 0%, #0099ff 100%);
+            color: #0a0e27;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 255, 255, 0.3);
+        }
+
+        .send-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 255, 255, 0.5);
+        }
+
+        .send-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .chat-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .control-button {
+            padding: 12px 30px;
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(0, 0, 0, 0.4);
+            color: #e0e6ed;
+        }
+
+        .start-button:hover:not(:disabled) {
+            background: rgba(0, 255, 0, 0.2);
+            border-color: rgba(0, 255, 0, 0.5);
+        }
+
+        .stop-button:hover:not(:disabled) {
+            background: rgba(255, 0, 0, 0.2);
+            border-color: rgba(255, 0, 0, 0.5);
+        }
+
+        .control-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .status-text {
+            color: #8b9dc3;
+            font-size: 0.9em;
+            margin: 0;
+        }
+
+        .demo-section {
+            background: rgba(5, 10, 20, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            margin-top: 30px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .demo-line {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        .demo-user {
+            color: #00ff88;
+        }
+
+        .demo-bot {
+            color: #00ccff;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #00ffff 0%, #0099ff 100%);
+            color: #0a0e27;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 5px 25px rgba(0, 255, 255, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 35px rgba(0, 255, 255, 0.5);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: #6b7a94;
+            margin-top: 50px;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2.5em;
+            }
+            
+            .message {
+                max-width: 100%;
+            }
+            
+            .user-message {
+                max-width: 90%;
+            }
+        }
+        
+        /* Toast notification styles */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 204, 255, 0.2);
+            border: 1px solid rgba(0, 204, 255, 0.5);
+            color: #00ccff;
+            padding: 15px 20px;
+            border-radius: 10px;
+            animation: slideIn 0.3s ease;
+            z-index: 10000;
+            max-width: 300px;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(400px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .toast.error {
+            background: rgba(255, 0, 0, 0.2);
+            border-color: rgba(255, 0, 0, 0.5);
+            color: #ff6b6b;
+        }
+        
+        .toast.success {
+            background: rgba(0, 255, 136, 0.2);
+            border-color: rgba(0, 255, 136, 0.5);
+            color: #00ff88;
+        }
+
+        /* Glowing cursor effect */
+        .glow-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(0, 255, 255, 0.3);
+            pointer-events: none;
+            z-index: 9999;
+            filter: blur(5px);
+            transition: transform 0.1s ease;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+        
+        /* Enhanced button glow effect */
+        @keyframes buttonGlow {
+            0% { box-shadow: 0 5px 25px rgba(0, 255, 255, 0.3); }
+            50% { box-shadow: 0 5px 35px rgba(0, 255, 255, 0.6); }
+            100% { box-shadow: 0 5px 25px rgba(0, 255, 255, 0.3); }
+        }
+        
+        .cta-button:hover {
+            animation: buttonGlow 2s infinite;
+        }
+        
+        /* Smooth transitions for all interactive elements */
+        button {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        input[type="text"] {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body onload="initializeApp()">
+    <div class="particles" id="particles"></div>
+    <div class="glow-cursor" id="glowCursor"></div>
+
+    <div class="container">
+        <div class="header">
+            <h1>JARVIS 2.0</h1>
+            <p class="tagline">AI EXPERT SYSTEM INTELLIGENCE</p>
+        </div>
+
+        <div class="main-content">
+            <div class="card">
+                <h2>What is JARVIS 2.0?</h2>
+                <p>A simple yet completely customizable, scalable and lightweight chatbot powered by Groq AI and Expert Systems. Built with modern technologies, JARVIS 2.0 uses advanced AI to provide fast, accurate responses.</p>
+                <button class="cta-button" onclick="scrollToDemo()">See Demo</button>
+            </div>
+
+            <div class="card">
+                <h2>Key Features</h2>
+                <ul>
+                    <li>Fully customizable knowledge base</li>
+                    <li>Lightweight & extremely scalable</li>
+                    <li>Plugin system for extended topics</li>
+                    <li>Natural language understanding</li>
+                    <li>Fast & accurate responses</li>
+                </ul>
+            </div>
+
+            <div class="features card">
+                <h2>Use Cases</h2>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <h3>🤖 Personal Assistant</h3>
+                        <p>Your fun conversational companion</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>📚 Educational Tool</h3>
+                        <p>Interactive learning for children</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>🏛️ Tour Guide</h3>
+                        <p>Heritage site information system</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>🛍️ E-Commerce Helper</h3>
+                        <p>Product discovery assistant</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-container" id="chatContainer">
+            <h2 style="color: #00ffff; margin-bottom: 20px; text-align: center;">⚡ Chat with JARVIS 2.0</h2>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot-message">
+                    <span class="message-sender">JARVIS 2.0:</span>
+                    <span class="message-text">Hey there! I'm JARVIS 2.0! Click "Start Chatbot" to begin chatting.</span>
+                </div>
+            </div>
+            <div class="chat-input-container">
+                <input type="text" id="chatInput" class="chat-input" placeholder="Type your message here..." disabled>
+                <button id="sendButton" class="send-button" disabled>Send</button>
+            </div>
+            <div class="chat-controls">
+                <button id="startButton" class="control-button start-button">Start Chatbot</button>
+                <button id="stopButton" class="control-button stop-button" disabled>Stop Chatbot</button>
+                <p class="status-text" id="statusText">Status: Not connected</p>
+            </div>
+        </div>
+
+        <div class="demo-section" id="demo">
+            <h2 style="color: #00ffff; margin-bottom: 20px;">📋 Example Conversation</h2>
+            <div class="demo-line demo-bot">JARVIS 2.0: Hey there! I'm JARVIS 2.0!</div>
+            <div class="demo-line demo-bot">Ask me anything about general knowledge!</div>
+            <div class="demo-line" style="height: 10px;"></div>
+            <div class="demo-line demo-user">You: who is the director?</div>
+            <div class="demo-line demo-bot">JARVIS 2.0: JJ Abrams.</div>
+            <div class="demo-line" style="height: 10px;"></div>
+            <div class="demo-line demo-user">You: when did the movie release?</div>
+            <div class="demo-line demo-bot">JARVIS 2.0: The worldwide release was 25th December, 2015.</div>
+            <div class="demo-line" style="height: 10px;"></div>
+            <div class="demo-line demo-user">You: offtopic</div>
+            <div class="demo-line demo-bot">JARVIS 2.0: You have enabled secondary topics. Ask me anything about movies.</div>
+            <div class="demo-line" style="height: 10px;"></div>
+            <div class="demo-line demo-user">You: know any good animation movies?</div>
+            <div class="demo-line demo-bot">JARVIS 2.0: Movies from various genres are available for discussion...</div></div>
+        </div>
+
+        <div class="footer">
+            <p>Powered by Groq AI with Llama-3.3-70b-versatile | JARVIS 2.0 Expert System</p>
+            <p style="margin-top: 10px;">Built with Node.js | AI Powered Intelligence</p>
+        </div>
+    </div>
+
+    <script>
+        // Create more floating particles for better visual effect
+        const particlesContainer = document.getElementById('particles');
+        const particleCount = window.innerWidth > 768 ? 80 : 40;
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.width = (Math.random() * 2 + 1) + 'px';
+            particle.style.height = particle.style.width;
+            particle.style.opacity = Math.random() * 0.5 + 0.3;
+            particle.style.animationDelay = Math.random() * 20 + 's';
+            particle.style.animationDuration = (20 + Math.random() * 15) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Enhanced glowing cursor effect
+        const glowCursor = document.getElementById('glowCursor');
+        document.addEventListener('mousemove', (e) => {
+            glowCursor.style.left = (e.clientX - 10) + 'px';
+            glowCursor.style.top = (e.clientY - 10) + 'px';
+        });
+        
+        // Hide cursor on inactive
+        document.addEventListener('mouseenter', () => {
+            glowCursor.style.opacity = '1';
+        });
+        
+        document.addEventListener('mouseleave', () => {
+            glowCursor.style.opacity = '0';
+        });
+
+        // Smooth scroll to demo with highlight effect
+        function scrollToDemo() {
+            const demoSection = document.getElementById('demo');
+            demoSection.scrollIntoView({ behavior: 'smooth' });
+            
+            // Add a subtle glow effect
+            demoSection.style.borderColor = 'rgba(0, 255, 255, 0.6)';
+            demoSection.style.boxShadow = '0 0 30px rgba(0, 255, 255, 0.3)';
+            
+            setTimeout(() => {
+                demoSection.style.borderColor = 'rgba(0, 255, 255, 0.2)';
+                demoSection.style.boxShadow = '';
+            }, 2000);
+        }
+
+        // Enhanced parallax effect with smooth animation
+        let lastX = 0, lastY = 0;
+        document.addEventListener('mousemove', (e) => {
+            const cards = document.querySelectorAll('.card');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            cards.forEach(card => {
+                const speed = 3;
+                const xMove = (x - 0.5) * speed;
+                const yMove = (y - 0.5) * speed;
+                
+                // Smooth interpolation
+                lastX = lastX + (xMove - lastX) * 0.1;
+                lastY = lastY + (yMove - lastY) * 0.1;
+                
+                card.style.transform = `translate(${lastX}px, ${lastY}px)`;
+            });
+        });
+
+        // Chat functionality
+        let chatbotProcess = null;
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const sendButton = document.getElementById('sendButton');
+        const startButton = document.getElementById('startButton');
+        const stopButton = document.getElementById('stopButton');
+        const statusText = document.getElementById('statusText');
+        let isWaitingForResponse = false;
+        
+        function initializeApp() {
+            console.log('JARVIS 2.0 app initialized');
+            // Pre-load any initial data
+            addInitialGreeting();
+        }
+        
+        function addInitialGreeting() {
+            // Clear initial message and show new one
+            const existingMessages = chatMessages.querySelectorAll('.message');
+            if (existingMessages.length === 1) {
+                chatMessages.innerHTML = `
+                    <div class="message bot-message">
+                        <span class="message-sender">JARVIS 2.0:</span>
+                        <span class="message-text">Welcome! I'm JARVIS 2.0, your intelligent AI assistant. Click "Start Chatbot" to begin our conversation!</span>
+                        <span class="message-time">${new Date().toLocaleTimeString()}</span>
+                    </div>
+                `;
+            }
+        }
+        
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = 'slideIn 0.3s ease reverse';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+        
+        function addTypingIndicator() {
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'typing-indicator';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.innerHTML = `
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            `;
+            chatMessages.appendChild(typingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) {
+                indicator.remove();
+            }
+        }
+
+        function addMessage(sender, text, isUser = false, source = null) {
+            removeTypingIndicator();
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+            
+            const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            messageDiv.innerHTML = `
+                <span class="message-sender">${sender}</span>
+                <span class="message-text">${escapeHtml(text)}</span>
+                <span class="message-time">${timestamp}</span>
+                ${source && !isUser ? `<span class="message-source">🧠 ${source}</span>` : ''}
+            `;
+            
+            // Add AI research styling if applicable
+            if (source && source.includes('AI')) {
+                messageDiv.classList.add('ai-research');
+            }
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+
+        async function startChatbot() {
+            try {
+                statusText.textContent = 'Status: Connecting...';
+                statusText.style.color = '#ffaa00';
+                addMessage('System', 'Initializing JARVIS 2.0 AI Expert System with Groq Engine...');
+                
+                const response = await fetch('http://localhost:8080/start', {
+                    method: 'POST'
+                }).catch(() => null);
+
+                if (!response) {
+                    // Fallback to demo mode
+                    showToast('Running in demo mode - C++ backend not found', 'info');
+                    addMessage('JARVIS 2.0', '✨ Demo Mode Active! Using Groq Llama-3.3-70b for responses. Try asking me something!');
+                    statusText.textContent = 'Status: Demo Mode (HF AI Active)';
+                    statusText.style.color = '#ffaa00';
+                } else if (response.ok) {
+                    const data = await response.json();
+                    addMessage('JARVIS 2.0', `🎯 Connected! Using Groq AI Knowledge Base. Ready to answer any question!`);
+                    statusText.textContent = 'Status: Connected (Local AI KB) ✓';
+                    statusText.style.color = '#00ff00';
+                    showToast('🧠 Local AI Knowledge Base connected - No external API required!', 'success');
+                } else {
+                    throw new Error('Backend connection failed');
+                }
+
+                chatInput.disabled = false;
+                sendButton.disabled = false;
+                startButton.disabled = true;
+                stopButton.disabled = false;
+                chatInput.focus();
+            } catch (error) {
+                console.error('Startup error:', error);
+                addMessage('System', `⚠️ Error: ${error.message}`);
+                showToast('Failed to start chatbot', 'error');
+                statusText.textContent = 'Status: Error';
+                statusText.style.color = '#ff0000';
+            }
+        }
+
+        async function sendMessage() {
+            const message = chatInput.value.trim();
+            if (!message || isWaitingForResponse) return;
+
+            // Check for special commands
+            const lowerMessage = message.toLowerCase();
+            
+            if (lowerMessage === 'bye') {
+                addMessage('You', message, true);
+                chatInput.value = '';
+                addMessage('JARVIS 2.0', 'Goodbye! It was great talking with you. See you next time! 👋');
+                setTimeout(stopChatbot, 1000);
+                return;
+            }
+            
+            if (lowerMessage === 'help') {
+                addMessage('You', message, true);
+                chatInput.value = '';
+                const helpText = `I can help you with a variety of topics! Try asking me about:
+- General knowledge questions
+- Information from my knowledge base
+- Movie recommendations (via plugins)
+
+For more info, just ask!`;
+                addMessage('JARVIS 2.0', helpText);
+                return;
+            }
+            
+            if (lowerMessage === 'clear') {
+                chatMessages.innerHTML = '';
+                chatInput.value = '';
+                addMessage('System', 'Chat cleared!');
+                return;
+            }
+
+            addMessage('You', message, true);
+            chatInput.value = '';
+            chatInput.disabled = true;
+            sendButton.disabled = true;
+            isWaitingForResponse = true;
+            
+            addTypingIndicator();
+
+            try {
+                // Try to send to backend
+                const response = await fetch('http://localhost:8080/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message }),
+                    timeout: 5000
+                }).catch(() => null);
+
+                removeTypingIndicator();
+                
+                if (response && response.ok) {
+                    const data = await response.json();
+                    if (data.response) {
+                        // Show source of response (Knowledge Base or AI Knowledge Base)
+                        const responseSource = data.source || (data.status === 'ai_research' ? 'AI Knowledge Base 🧠' : 'Knowledge Base 📚');
+                        addMessage('JARVIS 2.0', data.response, false, responseSource);
+                        
+                        // Show visual indicator for AI response
+                        if (data.status === 'ai_research') {
+                            showToast('🧠 AI Knowledge Base response generated successfully!', 'success');
+                        }
+                    } else {
+                        addMessage('System', '⚠️ Received empty response from backend');
+                    }
+                } else {
+                    // AI-like demo responses
+                    const demoResponses = {
+                        'hello': 'Hello! Welcome to JARVIS 2.0. How can I assist you today?',
+                        'hi': 'Greetings! I\'m JARVIS 2.0, here to help with any questions you might have.',
+                        'who are you': 'I\'m JARVIS 2.0, an intelligent AI assistant powered by Groq\'s Llama-3.3-70b. I\'m designed to provide accurate, contextual responses to your queries.',
+                        'how are you': 'I\'m functioning optimally and ready to assist! Thanks for asking.',
+                        'what can you do': 'I can answer questions using advanced AI, engage in meaningful conversations, and provide information across various domains using Groq\'s powerful language model.',
+                        'help': 'You can ask me about various topics. I\'m powered by Groq\'s Llama-3.3-70b model that helps me provide accurate answers. Try asking me specific questions!',
+                        'thanks': 'You\'re welcome! Feel free to ask if you need anything else.',
+                        'thank you': 'Happy to help! Is there anything else you\'d like to know?',
+                        'default': 'That\'s an interesting question! I\'m JARVIS 2.0, powered by Groq\'s cutting-edge AI. Feel free to ask me anything!'
+                    };
+                    
+                    const response = demoResponses[lowerMessage] || demoResponses['default'];
+                    addMessage('JARVIS 2.0', response);
+                    showToast('Demo mode - Backend not available', 'info');
+                }
+            } catch (error) {
+                removeTypingIndicator();
+                console.error('Message send error:', error);
+                addMessage('System', `⚠️ Error: ${error.message}`);
+                
+                // Try fallback to HF API
+                if (isWaitingForResponse) {
+                    try {
+                        console.log('Attempting HuggingFace API fallback...');
+                        const hfResponse = await fetch('http://localhost:8080/ai-research', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ message })
+                        });
+                        
+                        if (hfResponse.ok) {
+                            const hfData = await hfResponse.json();
+                            addMessage('JARVIS 2.0', hfData.response, false, 'AI Research (Groq Llama-3.3-70b)');
+                            showToast('🧠 Fallback to Hugging Face AI successful', 'success');
+                        }
+                    } catch (fallbackError) {
+                        console.error('Fallback error:', fallbackError);
+                        showToast('Failed to generate response', 'error');
+                    }
+                }
+            } finally {
+                isWaitingForResponse = false;
+                chatInput.disabled = false;
+                sendButton.disabled = false;
+                chatInput.focus();
+            }
+        }
+
+        function stopChatbot() {
+            chatInput.disabled = true;
+            sendButton.disabled = true;
+            startButton.disabled = false;
+            stopButton.disabled = true;
+            isWaitingForResponse = false;
+            removeTypingIndicator();
+            statusText.textContent = 'Status: Disconnected';
+            statusText.style.color = '#8b9dc3';
+            
+            // Try to notify backend
+            fetch('http://localhost:8080/stop', { method: 'POST' }).catch(() => {});
+            
+            addMessage('System', 'Chat session ended. Click "Start Chatbot" to reconnect.');
+            showToast('Chatbot disconnected', 'info');
+        }
+
+        // Event listeners
+        startButton.addEventListener('click', startChatbot);
+        stopButton.addEventListener('click', stopChatbot);
+        sendButton.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !isWaitingForResponse) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+        
+        // Auto-focus chat input on start
+        chatInput.addEventListener('focus', () => {
+            chatInput.style.borderColor = 'rgba(0, 255, 255, 0.8)';
+            chatInput.style.boxShadow = '0 0 20px rgba(0, 255, 255, 0.3)';
+        });
+        
+        chatInput.addEventListener('blur', () => {
+            chatInput.style.borderColor = 'rgba(0, 255, 255, 0.3)';
+            chatInput.style.boxShadow = 'none';
+        });
+        
+        // Keyboard shortcut hints
+        document.addEventListener('keydown', (e) => {
+            // Ctrl/Cmd + K to focus chat
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                if (!chatInput.disabled) {
+                    chatInput.focus();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

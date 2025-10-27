@@ -1,0 +1,53 @@
+# Dependencies
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+.env.secret
+.env.development
+
+# API Keys and credentials
+*_API_KEY*
+*api_key*
+*token*
+*.key
+*.pem
+credentials.json
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+desktop.ini
+.AppleDouble
+.LSOverride
+
+# Build and dist
+dist/
+build/
+.nuxt/
+.cache/
+.vuepress/dist/
+
+# Testing
+coverage/
+.nyc_output/
+*.lcov
+
+# Misc
+.env.example
+.github/workflows/secrets*
