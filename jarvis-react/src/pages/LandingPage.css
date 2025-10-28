@@ -1,0 +1,203 @@
+/* Advanced Dark Theme Landing Page */
+
+.landing-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.landing-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #0a0a0a 0%, #030305 15%, #0a0612 30%, #050508 50%, #0a0612 70%, #030305 85%, #0a0a0a 100%);
+  z-index: -1;
+}
+
+.landing-bg::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(1.5px 1.5px at 5% 10%, #ffffff, rgba(255,255,255,0)),
+    radial-gradient(2px 2px at 12% 25%, #f0f0ff, rgba(255,255,255,0)),
+    radial-gradient(1px 1px at 25% 8%, #e8e8ff, rgba(255,255,255,0)),
+    radial-gradient(1.5px 1.5px at 35% 45%, #ffffff, rgba(255,255,255,0)),
+    radial-gradient(2px 2px at 48% 15%, #f0f0ff, rgba(255,255,255,0)),
+    radial-gradient(1px 1px at 58% 30%, #ffffff, rgba(255,255,255,0)),
+    radial-gradient(1.5px 1.5px at 65% 70%, #e8e8ff, rgba(255,255,255,0)),
+    radial-gradient(2px 2px at 78% 20%, #ffffff, rgba(255,255,255,0)),
+    radial-gradient(1px 1px at 85% 55%, #f0f0ff, rgba(255,255,255,0)),
+    radial-gradient(1.5px 1.5px at 92% 85%, #ffffff, rgba(255,255,255,0));
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  opacity: 1;
+  animation: twinkleStar 3s ease-in-out infinite;
+  z-index: 0;
+}
+
+@keyframes twinkleStar {
+  0%, 100% { opacity: 0.9; }
+  50% { opacity: 0.5; }
+}
+
+.landing-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.lottie-wrapper {
+  width: 500px;
+  height: 400px;
+  margin-bottom: 45px;
+  margin-top: -126px;
+  flex-shrink: 0;
+}
+
+lottie-player {
+  width: 100%;
+  height: 100%;
+}
+
+.jarvis-title {
+  font-size: 3.5em;
+  font-weight: 900;
+  background: linear-gradient(135deg, #00ccff, #0099ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 3px;
+  margin: 0;
+  text-align: center;
+  filter: drop-shadow(0 0 20px rgba(0, 204, 255, 0.5));
+}
+
+/* Planets */
+.floating-planet {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.planet-position-left {
+  left: 15%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.planet-position-right-top {
+  right: 12%;
+  top: 25%;
+}
+
+.planet-position-right-bottom {
+  right: 8%;
+  bottom: 20%;
+}
+
+.planet-large {
+  position: relative;
+  width: 132px;
+  height: 132px;
+  border-radius: 50%;
+}
+
+.planet-medium {
+  position: relative;
+  width: 99px;
+  height: 99px;
+  border-radius: 50%;
+}
+
+.planet-small {
+  position: relative;
+  width: 69px;
+  height: 69px;
+  border-radius: 50%;
+}
+
+.planet-gradient {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8), rgba(0,150,255,0.6) 40%, rgba(0,100,200,1));
+  box-shadow: 0 0 30px rgba(0, 150, 255, 0.5), inset -10px -10px 30px rgba(0,0,0,0.4);
+}
+
+.planet-shine {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.4), transparent 50%);
+}
+
+.planet-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 176px;
+  height: 176px;
+  border: 2px solid rgba(0, 200, 255, 0.4);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) rotateX(75deg) rotateZ(0deg);
+  animation: rotatePlanetRing 15s linear infinite;
+}
+
+@keyframes rotatePlanetRing {
+  from { transform: translate(-50%, -50%) rotateX(75deg) rotateZ(0deg); }
+  to { transform: translate(-50%, -50%) rotateX(75deg) rotateZ(360deg); }
+}
+
+/* Floating Stones */
+.floating-stone {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(150,150,255,0.6), rgba(50,100,200,0.8));
+  box-shadow: 0 0 15px rgba(0, 150, 200, 0.4);
+}
+
+.stone-1 {
+  width: 18px;
+  height: 18px;
+  top: -40px;
+  left: 50%;
+  margin-left: -9px;
+}
+
+.stone-2 {
+  width: 14px;
+  height: 14px;
+  top: 50%;
+  right: -35px;
+  margin-top: -7px;
+}
+
+.stone-3 {
+  width: 16px;
+  height: 16px;
+  bottom: -30px;
+  right: 20px;
+}
+
+.stone-4 {
+  width: 12px;
+  height: 12px;
+  top: 20px;
+  left: -30px;
+}
